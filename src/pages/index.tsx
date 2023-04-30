@@ -1,14 +1,28 @@
 import { useMemo, useState } from 'react'
 import useSWR from 'swr'
 import { FormField, Loader, RenderCards } from '../components'
-import type { Post } from '../types'
-import { getRandomPrompt } from '../utils'
+import type { Post as PostType } from '../types'
+import type { GetServerSideProps } from 'next'
+import { connectMongo } from '@/utils'
+import Post from '@/models/post.model'
 
 const fetcher = async (url: string) => await fetch(url).then(async (r) => await r.json())
 
-export default function Home() {
+export const getServerSideProps: GetServerSideProps = async () => {
+  await connectMongo()
+  const posts = await Post.find().sort({ createdAt: 'desc' })
+  return {
+    props: {
+      fallback: {
+        '/api/post': { success: true, data: posts }
+      }
+    }
+  }
+}
+
+export default function Home () {
   const [searchText, setSearchText] = useState('')
-  const { data, isLoading } = useSWR<{ data: Post[] }>('/api/post', fetcher)
+  const { data, isLoading } = useSWR<{ data: PostType[] }>('/api/post', fetcher)
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.currentTarget.value)
@@ -45,14 +59,13 @@ export default function Home() {
             <div className='flex justify-center items-center'>
               <Loader />
             </div>
-          )
+            )
           : (
             <div className='grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3'>
               <RenderCards data={posts} title={`${searchText !== '' ? 'No search results found' : 'No posts found'}`} />
             </div>
-          )}
+            )}
       </div>
     </section>
   )
 }
-

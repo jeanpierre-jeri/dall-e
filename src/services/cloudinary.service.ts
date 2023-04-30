@@ -9,7 +9,7 @@ cloudinary.config({
 
 export const uploadImage = async (image: string) => {
   if (image === '') return { url: '' }
-  const { secure_url: url } = await cloudinary.uploader.upload(image, {upload_preset: 'dalle'})
+  const { secure_url: url } = await cloudinary.uploader.upload(image, { upload_preset: 'dalle' })
 
   return { url }
 }

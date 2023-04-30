@@ -6,7 +6,7 @@ interface RenderCardsProps {
   title: string
 }
 
-export function RenderCards({ data = [], title }: RenderCardsProps) {
+export function RenderCards ({ data = [], title }: RenderCardsProps) {
   if (data.length === 0) return <h2 className='mt-5 font-bold text-[#6449ff] text-xl uppercase'>{title}</h2>
   return (
     <>

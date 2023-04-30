@@ -2,8 +2,9 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { FormField, Loader } from '../components'
 import { getRandomPrompt } from '../utils'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
-export default function CreatePost() {
+export default function CreatePost () {
   const [form, setForm] = useState({
     name: '',
     prompt: '',
@@ -57,7 +58,7 @@ export default function CreatePost() {
         },
         body: JSON.stringify(form)
       }).then(async (res) => await res.json()).catch(err => { throw new Error(err) })
-      router.push('/')
+      void router.push('/')
     } catch (error) {
       console.error(error)
     } finally {
@@ -118,11 +119,11 @@ export default function CreatePost() {
           <div className='relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-64 p-3 h-64 flex justify-center items-center'>
             {form.image !== ''
               ? (
-                <img src={form.image} alt={form.prompt} className='w-full h-full object-contain' />
-              )
+                <Image src={form.image} alt={form.prompt} className='w-full h-full object-contain' />
+                )
               : (
-                <img src='/preview.png' alt='Preview Image' className='w-9/12 h-9/12 object-contain opacity-40' />
-              )}
+                <Image src='/preview.png' alt='Preview Image' className='w-9/12 h-9/12 object-contain opacity-40' />
+                )}
 
             {generatingImg && (
               <div className='absolute inset-0 z-0 flex justify-center items-center bg-black/50 rounded-lg'>

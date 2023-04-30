@@ -10,7 +10,7 @@ interface FormFieldProps {
   handleSurpriseMe?: () => void
 }
 
-export function FormField(props: FormFieldProps) {
+export function FormField (props: FormFieldProps) {
   const { labelName, name, placeHolder, type, isSurpriseMe = false, value, onChange, handleSurpriseMe } = props
   return (
     <div>

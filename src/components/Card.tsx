@@ -2,7 +2,7 @@ import { downloadImage } from '../utils'
 import type { Post } from '../types'
 import Image from 'next/image'
 
-export function Card({ _id, name, prompt, photo }: Post) {
+export function Card ({ _id, name, prompt, photo }: Post) {
   return (
     <article className='rouded-xl group relative shadow-card hover:shadow-cardhover card'>
       <Image src={photo} alt={prompt} className='w-full h-auto object-cover rounded-xl' width={311} height={311} priority />
@@ -16,7 +16,7 @@ export function Card({ _id, name, prompt, photo }: Post) {
           </div>
 
           <button type='button' onClick={() => downloadImage(_id, photo)} className='outline-none bg-transparent border-none'>
-            <img src='/download.png' alt='Download' width={24} height={24} className='aspect-square object-contain invert' />
+            <Image src='/download.png' alt='Download' width={24} height={24} className='aspect-square object-contain invert' />
           </button>
         </div>
       </div>
